@@ -30,17 +30,9 @@ module.exports = function (grunt) {
   grunt.initConfig({
     yeoman: yeomanConfig,
     watch: {
-      coffee: {
-        files: ['<%= yeoman.app %>/scripts/{,*/}*.coffee'],
-        tasks: ['coffee:dist']
-      },
-      coffeeTest: {
-        files: ['test/spec/{,*/}*.coffee'],
-        tasks: ['coffee:test']
-      },
-      compass: {
-        files: ['<%= yeoman.app %>/styles/{,*/}*.{scss,sass}'],
-        tasks: ['compass:server', 'autoprefixer']
+      less:{
+        files: ['<%= yeoman.src %>/less/{,*/}*.less','lib/bootstrap/less/*.less'],
+        tasks: ['less:development']
       },
       styles: {
         files: ['<%= yeoman.app %>/styles/{,*/}*.css'],
@@ -133,48 +125,24 @@ module.exports = function (grunt) {
         '<%= yeoman.app %>/scripts/{,*/}*.js'
       ]
     },
-    coffee: {
-      options: {
-        sourceMap: true,
-        sourceRoot: ''
-      },
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/scripts',
-          src: '{,*/}*.coffee',
-          dest: '.tmp/scripts',
-          ext: '.js'
-        }]
-      },
-      test: {
-        files: [{
-          expand: true,
-          cwd: 'test/spec',
-          src: '{,*/}*.coffee',
-          dest: '.tmp/spec',
-          ext: '.js'
-        }]
-      }
-    },
-    compass: {
-      options: {
-        sassDir: '<%= yeoman.app %>/styles',
-        cssDir: '.tmp/styles',
-        generatedImagesDir: '.tmp/images/generated',
-        imagesDir: '<%= yeoman.app %>/images',
-        javascriptsDir: '<%= yeoman.app %>/scripts',
-        fontsDir: '<%= yeoman.app %>/styles/fonts',
-        importPath: '<%= yeoman.app %>/bower_components',
-        httpImagesPath: '/images',
-        httpGeneratedImagesPath: '/images/generated',
-        httpFontsPath: '/styles/fonts',
-        relativeAssets: false
-      },
-      dist: {},
-      server: {
+    less: {
+      development: {
         options: {
-          debugInfo: true
+          paths: ['assets/css']
+        },
+        files: {
+          '<%= yeoman.src %>/assets/css/helian.css': '<%= yeoman.src %>/less/helian.less',
+          '<%= yeoman.src %>/assets/css/bootstrap.css': 'lib/bootstrap/less/bootstrap.less'
+        }
+      },
+      production: {
+        options: {
+          paths: ["assets/css"],
+          cleancss: true
+        },
+        files: {
+          '<%= yeoman.dist %>/assets/css/helian.css': '<%= yeoman.src %>/less/helian.less',
+          '<%= yeoman.dist %>/assets/css/bootstrap.css': 'lib/bootstrap/less/bootstrap.less'
         }
       }
     },
