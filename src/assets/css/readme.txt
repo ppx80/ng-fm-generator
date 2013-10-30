@@ -1,0 +1,1 @@
+Store a application style files

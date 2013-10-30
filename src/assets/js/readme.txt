@@ -1,0 +1,1 @@
+Store a js files, like jquery plugin or dom analisys
