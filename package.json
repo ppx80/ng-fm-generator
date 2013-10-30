@@ -1,5 +1,6 @@
 {
-  "name": "fmapp",
+  "name": "fmApp",
+  "title": "Fm Web application",
   "version": "0.0.1",
   "dependencies": {},
   "devDependencies": {

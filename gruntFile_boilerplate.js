@@ -116,7 +116,7 @@ module.exports = function (grunt) {
         src:['<%= src.js %>'],
         dest:'<%= distdir %>/<%= pkg.name %>.js'
       },
-      angular: {
+      angular: {  
         src:['<%= concat.angular.src %>'],
         dest: '<%= distdir %>/angular.js'
       },

@@ -1,4 +1,4 @@
-// Generated on 2013-09-15 using generator-angular 0.4.0
+
 'use strict';
 var LIVERELOAD_PORT = 35729;
 var lrSnippet = require('connect-livereload')({ port: LIVERELOAD_PORT });
@@ -28,6 +28,7 @@ module.exports = function (grunt) {
   } catch (e) {}
 
   grunt.initConfig({
+    pkg: grunt.file.readJSON('package.json'),
     yeoman: yeomanConfig,
     watch: {
       less:{
@@ -43,10 +44,8 @@ module.exports = function (grunt) {
           livereload: LIVERELOAD_PORT
         },
         files: [
-          '<%= yeoman.app %>/{,*/}*.html',
-          '.tmp/styles/{,*/}*.css',
-          '{.tmp,<%= yeoman.app %>}/scripts/{,*/}*.js',
-          '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
+          '<%= yeoman.src %>/{,*/}*.html',
+          '<%= yeoman.src %>}/{,*/}*.js'
         ]
       }
     },
@@ -73,7 +72,7 @@ module.exports = function (grunt) {
             return [
               lrSnippet,
               mountFolder(connect, '.tmp'),
-              mountFolder(connect, yeomanConfig.app)
+              mountFolder(connect, 'src')
             ];
           }
         }
@@ -125,6 +124,7 @@ module.exports = function (grunt) {
         '<%= yeoman.app %>/scripts/{,*/}*.js'
       ]
     },
+    //Less actions. 
     less: {
       development: {
         options: {
@@ -155,10 +155,10 @@ module.exports = function (grunt) {
       dist: {
         files: {
           src: [
-            '<%= yeoman.dist %>/scripts/{,*/}*.js',
-            '<%= yeoman.dist %>/styles/{,*/}*.css',
-            '<%= yeoman.dist %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
-            '<%= yeoman.dist %>/styles/fonts/*'
+            '<%= yeoman.dist %>/assets/js/{,*/}*.js',
+            '<%= yeoman.dist %>/assets/css/{,*/}*.css',
+            '<%= yeoman.dist %>/assets/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}',
+            '<%= yeoman.dist %>/assets/fonts/*'
           ]
         }
       }
@@ -254,18 +254,19 @@ module.exports = function (grunt) {
           ]
         }]
       },
-      styles: {
-        expand: true,
-        cwd: '<%= yeoman.app %>/styles',
-        dest: '.tmp/styles/',
-        src: '{,*/}*.css'
+      server: {
+        files: [{
+          expand: true, //Questa opzione abilita le seguenti
+          flatten: true, //Copia i files in un unica posizione.
+          src: ['src/**/*.js','lib/bootstrap/dist/js/*.min.js','lib/bootstrap/assets/js/*.min.js','lib/angular/*.min.js','lib/jquery/*.min.js'],
+          dest: 'src/assets/js/'
+        }]
       }
     },
     concurrent: {
       server: [
-        'coffee:dist',
-        'compass:server',
-        'copy:styles'
+        'less:development',
+        'copy:server'
       ],
       test: [
         'coffee',
